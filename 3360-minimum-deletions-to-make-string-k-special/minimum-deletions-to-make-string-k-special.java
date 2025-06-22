@@ -1,30 +1,30 @@
 class Solution {
     public int minimumDeletions(String word, int k) {
         int[] freq = new int[26];
-
         for (char ch : word.toCharArray()) {
             freq[ch - 'a']++;
         }
 
-        Arrays.sort(freq);
+        int ans = word.length();
 
-        int result = word.length();
-        int cumulativeDeleted = 0;
+        for(int i=0; i<26; i++){
+            int del = 0;
 
-        for (int i = 0; i < 26; i++) {
-            int del = cumulativeDeleted;
-            for (int j = 25; j > i; j--) {
-                if (freq[j] - freq[i] <= k) {
-                    break;
+            for(int j=0; j<26; j++){
+                if(i==j) continue;
+
+                if(freq[j] < freq[i]){
+                    del += freq[j];
                 }
-
-                del += freq[j] - freq[i] - k;
+                else if(Math.abs(freq[i] - freq[j]) > k){
+                    del += (Math.abs(freq[j] - freq[i]) - k);
+                }
+            
             }
-
-            result = Math.min(result, del);
-            cumulativeDeleted += freq[i];
+            ans = Math.min(del, ans);
         }
 
-        return result;
+        return ans;
+
     }
 }
