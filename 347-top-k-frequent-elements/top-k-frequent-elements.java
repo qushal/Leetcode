@@ -1,24 +1,27 @@
 class Solution {
     public int[] topKFrequent(int[] nums, int k) {
         Map<Integer, Integer> map = new HashMap<>();
-        for(int i=0; i<nums.length; i++){
-            map.merge(nums[i], 1, Integer::sum);
+        for(int num: nums){
+            map.merge(num, 1, Integer::sum);
         }
-        // now sort this  in descending order
-        Map<Integer, Integer> sortedMap = map.entrySet().stream().sorted(Map.Entry.<Integer, Integer> comparingByValue().reversed()).
-        collect(Collectors.toMap(
-            Map.Entry::getKey,
-            Map.Entry::getValue,
-            (a, b) -> a,
-            LinkedHashMap::new
-
-        ));
+        List<Integer> [] heap = new ArrayList[nums.length+1];
+        for(int key: map.keySet()){
+            int val = map.get(key);
+            if(heap[val] == null){
+                heap[val] = new ArrayList<>();
+            }
+            heap[val].add(key);
+        }
         int ans[] = new int[k];
         int j=0;
-        for (Map.Entry<Integer, Integer> entry : sortedMap.entrySet()) {
-            if(j==k) break;
-            ans[j] = entry.getKey();
-            j++;
+        for(int i=nums.length; i>=0; i--){
+            if(heap[i] == null) continue;
+            List<Integer> part = heap[i];
+            for(int x: part){
+                if(j == k) break;
+                ans[j++] = x;
+            }
+            
         }
         return ans;
     }
