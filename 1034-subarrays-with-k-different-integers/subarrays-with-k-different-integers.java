@@ -12,9 +12,7 @@ class Solution {
             if(map.size() == k + 1){
                 map.remove(nums[i++]);
 
-                while(map.containsKey(nums[i-1]) && map.get(nums[i-1]) == 0){
-                    map.remove(nums[i-1]);
-                }
+                
                 prefix = 0;
             }
             if(map.size() == k){
