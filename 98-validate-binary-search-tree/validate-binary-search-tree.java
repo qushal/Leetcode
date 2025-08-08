@@ -14,14 +14,18 @@
  * }
  */
 class Solution {
+    TreeNode prev = null;
+    boolean flag = true;
     public boolean isValidBST(TreeNode root) {
-        Long min = Long.MIN_VALUE;
-        Long max = Long.MAX_VALUE;
-        return isValid(root, min, max);
+        inorder(root);
+        return flag;
     }
-    public boolean isValid(TreeNode root, Long min, Long max){
-        if(root == null) return true;
-        if(root.val <= min || root.val >= max) return false;
-        return isValid(root.left, min, (long) root.val) && isValid(root.right, (long) root.val, max);
+    public void inorder(TreeNode root){
+        if(root == null) return;
+        inorder(root.left);
+        if(prev == null) prev = root;
+        else if(prev.val >= root.val) flag = false;
+        else prev = root;
+        inorder(root.right);
     }
 }
