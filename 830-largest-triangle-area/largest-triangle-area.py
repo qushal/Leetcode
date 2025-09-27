@@ -14,7 +14,6 @@ class Solution:
                         x2 * (y3 - y1)+
                         x3 * (y1 - y2)
                     )
-
+                
                     maxArea = max(maxArea, form)
-
         return maxArea
