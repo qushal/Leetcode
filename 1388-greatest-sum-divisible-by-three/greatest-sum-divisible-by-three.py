@@ -3,6 +3,7 @@ class Solution:
         n = len(nums)
         dp = [[None] * 3 for _ in range(n+1)]
         
+        @lru_cache(None)
         def solve(i, remain):
             if i >= n:
                 return 0 if remain == 0 else float('-inf')
